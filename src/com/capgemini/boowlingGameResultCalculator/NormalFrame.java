@@ -51,12 +51,12 @@ public class NormalFrame extends Frame {
 		Integer bonusValue = Integer.valueOf(0);
 		BONUS nextFrameBonus = nextFrame.getBonus();
 		
-		if (!nextFrameBonus.equals(BONUS.STRIKE)) {
+		if (nextFrameBonus.equals(BONUS.SPARE) || nextFrameBonus.equals(BONUS.NO_BONUS)) {
 			bonusValue = nextFrame.getFirstRollIfExistsOtherReturnZero()
 					   + nextFrame.getSecondRollIfExistsOtherReturnZero();
-		} else if (nextFrameBonus.equals(BONUS.STRIKE)) {
+		}
+		if (nextFrameBonus.equals(BONUS.STRIKE)) {
 			bonusValue = nextFrame.getFirstRollIfExistsOtherReturnZero();
-			
 			if (nextFrame.nextFrameExist()) {
 				bonusValue += nextFrame.getNextFrame().getFirstRollIfExistsOtherReturnZero();
 			}
