@@ -30,7 +30,12 @@ public class LastFrame extends Frame{
 			throw new IllegalArgumentException(
 					"Number of pins can be bigger then " + MAX_NUMBER_PINS_IN_ONE_ROLL + " in one rolls");
 		}
-
+		
+		if ((sumOfRolls() + numberOfPins > MAX_NUMBER_PINS_IN_ONE_ROLL) && BONUS.NO_BONUS.equals(bonus)) {
+			throw new IllegalArgumentException(
+					"Number of pins in two rolls can not be bigger then " +MAX_NUMBER_PINS_IN_ONE_ROLL);
+		}
+	
 		if (sumOfRolls() + numberOfPins > MAX_NUMBER_PINS_IN_LAST_FRAME) {
 			throw new IllegalArgumentException(
 					"Number of pins in last frame can not be bigger then " + MAX_NUMBER_PINS_IN_LAST_FRAME);
