@@ -2,17 +2,13 @@ package com.capgemini.boowlingGameResultCalculator;
 
 import java.util.ArrayList;
 
-public class NormalFrame implements Frame {
+public class NormalFrame extends Frame {
 
 	private final int MAX_NUMBER_OF_ROLLS = 2;
-	private final int MAX_NUMBER_PINS_IN_ONE_FRAME = 10;
-	
-	private Frame nextFrame;
-	private ArrayList<Integer> rolls;
-	private BONUS bonus;
+	private final int MAX_NUMBER_PINS_IN_ONE_NORMAL_FRAME = 10;
 
 	public NormalFrame() {
-		rolls = new ArrayList<>();
+		rolls = new ArrayList<>(MAX_NUMBER_OF_ROLLS);
 		bonus = BONUS.NO_BONUS;
 		nextFrame = null;
 	}
@@ -26,27 +22,12 @@ public class NormalFrame implements Frame {
 		return score;
 	}
 
-	private Integer sumOfRolls() {
-		Integer sum = Integer.valueOf(0);
-		for (Integer pins : rolls) {
-			sum += pins;
-		}
-		return sum;
-	}
-
 	private Integer getBonusValue() {
 		Integer bonusValue = Integer.valueOf(0);
 		if (nextFrameExist()) {
 			bonusValue = countBonus();
 		}
 		return bonusValue;
-	}
-
-	public Boolean nextFrameExist() {
-		if (nextFrame != null) {
-			return Boolean.TRUE;
-		}
-		return Boolean.FALSE;
 	}
 
 	private Integer countBonus() {
@@ -96,53 +77,26 @@ public class NormalFrame implements Frame {
 					"Number of pins can be bigger then " + MAX_NUMBER_PINS_IN_ONE_ROLL + " in one rolls");
 		}
 
-		if (sumOfRolls() + numberOfPins > MAX_NUMBER_PINS_IN_ONE_FRAME) {
+		if (sumOfRolls() + numberOfPins > MAX_NUMBER_PINS_IN_ONE_NORMAL_FRAME) {
 			throw new IllegalArgumentException(
-					"Number of pins in one frame can not be bigger then " + MAX_NUMBER_PINS_IN_ONE_FRAME);
+					"Number of pins in one frame can not be bigger then " + MAX_NUMBER_PINS_IN_ONE_NORMAL_FRAME);
 		}
 
 		rolls.add(numberOfPins);
 		setBonusIfShouldBe(numberOfPins);
 	}
 
-	private void setBonusIfShouldBe(Integer numberOfPins) {
-		if (numberOfPins == MAX_NUMBER_PINS_IN_ONE_FRAME) {
-			bonus = BONUS.STRIKE;
-		} else if (sumOfRolls() == MAX_NUMBER_PINS_IN_ONE_FRAME) {
-			bonus = BONUS.SPARE;
-		}
-	}
-
 	@Override
 	public Boolean isFinished() {
-		return sumOfRolls().equals(MAX_NUMBER_PINS_IN_ONE_FRAME) || (rolls.size() == MAX_NUMBER_OF_ROLLS);
+		return sumOfRolls().equals(MAX_NUMBER_PINS_IN_ONE_NORMAL_FRAME) || (rolls.size() == MAX_NUMBER_OF_ROLLS);
 	}
 
 	public BONUS getBonus() {
 		return bonus;
 	}
 
-	public Integer getFirstRollIfExistsOtherReturnZero() {
-		if (rolls.size() > 0) {
-			return rolls.get(0);
-		}
-		return 0;
-	}
-
-	public Integer getSecondRollIfExistsOtherReturnZero() {
-		if (rolls.size() > 1) {
-			return rolls.get(1);
-		}
-		return 0;
-	}
-	
 	public void setNextFrame(Frame nextFrame) {
 		this.nextFrame = nextFrame;
-	}
-	
-	@Override
-	public Frame getNextFrame() {
-		return nextFrame;
 	}
 
 }
