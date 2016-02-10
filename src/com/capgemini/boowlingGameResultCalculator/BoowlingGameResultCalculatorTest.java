@@ -19,7 +19,6 @@ public class BoowlingGameResultCalculatorTest {
 	public static void beforeClass() {
 		logger = Logger.getLogger(BoowlingGameResultCalculatorTest.class.getName());
 		logger.info("Logger starts");
-		;
 	}
 
 	@Before

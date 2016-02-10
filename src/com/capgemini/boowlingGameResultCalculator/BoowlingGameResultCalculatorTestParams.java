@@ -43,7 +43,7 @@ public class BoowlingGameResultCalculatorTestParams {
 	}
 	
 	@Parameters
-	public static Collection<Object[]> zero(){
+	public static Collection<Object[]> data(){
 		return Arrays.asList(new Object[][]{
 			{WithException.NO,OnlyLastFrame.NO, Arrays.asList(0),0},
 			{WithException.NO,OnlyLastFrame.NO, Arrays.asList(4),4},
@@ -85,9 +85,9 @@ public class BoowlingGameResultCalculatorTestParams {
 
 	@Test
 	public void shouldBeExpectedForParametersWithoutException() {
-		
+		//when
 		if(WithException.NO.equals(withException)){
-			
+			 
 			if(OnlyLastFrame.YES.equals(onlyLastFrame)){
 				int zero = 0;
 				for (int i = 0; i < 9; i++) {
@@ -102,6 +102,7 @@ public class BoowlingGameResultCalculatorTestParams {
 			
 			int score = boowlingGameResultCalculator.score();
 			
+			//then
 			assertEquals(expected, score);
 			
 		}
@@ -114,7 +115,7 @@ public class BoowlingGameResultCalculatorTestParams {
 
 	@Test
 	public void shouldBeThrowIllegalArgumentException() {
-		
+		 //when
 		if(WithException.YES.equals(withException)){
 			
 			if(OnlyLastFrame.YES.equals(onlyLastFrame)){
@@ -125,6 +126,7 @@ public class BoowlingGameResultCalculatorTestParams {
 				}
 			}
 			
+			//then
 			thrown.expect(IllegalArgumentException.class);
 			for (Integer pins : list) {
 				boowlingGameResultCalculator.roll(pins);
