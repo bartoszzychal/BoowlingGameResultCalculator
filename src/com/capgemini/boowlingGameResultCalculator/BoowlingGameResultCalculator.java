@@ -25,7 +25,8 @@ public class BoowlingGameResultCalculator implements BoowlingGameResultCalculato
 	}
 	
 	private Frame getNewFrame(){
-		return frameFactory.getFrame(++frameCounter);
+		++frameCounter;
+		return frameFactory.getFrame(frameCounter);
 	}
 
 	@Override
@@ -47,7 +48,11 @@ public class BoowlingGameResultCalculator implements BoowlingGameResultCalculato
 	}
 
 	private void updateNextFrameForCurrentFrame(Frame nextFrame) {
-		getCurrentFrame().setNextFrame(nextFrame);
+		try {
+			getCurrentFrame().setNextFrame(nextFrame);
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private Frame getCurrentFrame() {
@@ -65,10 +70,9 @@ public class BoowlingGameResultCalculator implements BoowlingGameResultCalculato
 
 	@Override
 	public boolean isFinished() {
-		if (listOfFrames.size() == MAX_NUMBER_OF_FRAMES && listOfFrames.get(MAX_NUMBER_OF_FRAMES - 1).isFinished()) {
-			return true;
-		}
-		return false;
+		return listOfFrames.size() == MAX_NUMBER_OF_FRAMES && 
+				listOfFrames.get(MAX_NUMBER_OF_FRAMES - 1).isFinished();
+		
 	}
 
 }

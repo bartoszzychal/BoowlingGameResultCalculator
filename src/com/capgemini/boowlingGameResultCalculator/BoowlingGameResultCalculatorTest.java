@@ -41,6 +41,14 @@ public class BoowlingGameResultCalculatorTest {
 		// then
 		assertEquals(0, score);
 	}
+	@Test
+	public void shouldBeZeroForNotThrows() {
+		// given
+		// when
+		int score = boowlingGameResultCalculator.score();
+		// then
+		assertEquals(0, score);
+	}
 
 	@Test
 	public void shouldBeFourForHitsFourPins() {
