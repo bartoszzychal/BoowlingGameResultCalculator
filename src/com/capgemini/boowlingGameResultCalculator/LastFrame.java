@@ -54,5 +54,4 @@ public class LastFrame extends Frame{
 	public void setNextFrame(Frame frame) {
 	}
 
-
 }

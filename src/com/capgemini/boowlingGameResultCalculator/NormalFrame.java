@@ -98,5 +98,5 @@ public class NormalFrame extends Frame {
 	public void setNextFrame(Frame nextFrame) {
 		this.nextFrame = nextFrame;
 	}
-
+	
 }

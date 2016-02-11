@@ -9,18 +9,23 @@ public class BoowlingGameResultCalculator implements BoowlingGameResultCalculato
 	private final int MAX_NUMBER_OF_FRAMES = MAX_NUMBER_OF_NORMAL_FRAMES + MAX_NUMBER_OF_LAST_FRAMES;
 
 	private LinkedList<Frame> listOfFrames;
-
 	private FrameFactory frameFactory;
-
+	private Integer frameCounter;
+	
 	public BoowlingGameResultCalculator() {
 		listOfFrames = new LinkedList<>();
 		frameFactory = new FrameFactory();
+		frameCounter = Integer.valueOf(0);
 		createFirstFrame();
 	}
 
 	private void createFirstFrame() {
-		Frame newFrame = frameFactory.getFrame();
+		Frame newFrame = getNewFrame();
 		listOfFrames.add(newFrame);
+	}
+	
+	private Frame getNewFrame(){
+		return frameFactory.getFrame(++frameCounter);
 	}
 
 	@Override
@@ -36,7 +41,7 @@ public class BoowlingGameResultCalculator implements BoowlingGameResultCalculato
 	}
 
 	private void addNewFrame() {
-		Frame newFrame = frameFactory.getFrame();
+		Frame newFrame = getNewFrame();
 		updateNextFrameForCurrentFrame(newFrame);
 		listOfFrames.add(newFrame);
 	}
