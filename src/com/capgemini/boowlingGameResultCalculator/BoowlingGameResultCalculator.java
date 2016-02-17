@@ -32,12 +32,12 @@ public class BoowlingGameResultCalculator implements BoowlingGameResultCalculato
 	@Override
 	public void roll(int numberOfPins) {
 		if (!isFinished()) {
-			Frame lastCreatedFrame = getCurrentFrame();
-			if (lastCreatedFrame.isFinished()) {
+			Frame currentFrame = getCurrentFrame();
+			if (currentFrame.isFinished()) {
 				addNewFrame();
-				lastCreatedFrame = getCurrentFrame();
+				currentFrame = getCurrentFrame();
 			}
-			lastCreatedFrame.addRoll(numberOfPins);
+			currentFrame.addRoll(numberOfPins);
 		}
 	}
 
