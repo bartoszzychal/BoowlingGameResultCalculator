@@ -13,13 +13,6 @@ import org.junit.Test;
 public class BoowlingGameResultCalculatorTest {
 
 	BoowlingGameResultCalculator boowlingGameResultCalculator;
-	static Logger logger;
-
-	@BeforeClass
-	public static void beforeClass() {
-		logger = Logger.getLogger(BoowlingGameResultCalculatorTest.class.getName());
-		logger.info("Logger starts");
-	}
 
 	@Before
 	public void beforeTestCreateObject() {
@@ -264,9 +257,10 @@ public class BoowlingGameResultCalculatorTest {
 		boowlingGameResultCalculator.roll(ten);
 
 		int score = boowlingGameResultCalculator.score();
-		logger.info(Integer.toString(score));
-
+		
+		assertEquals(300, score);
 	}
+	
 	@Test
 	public void shouldBe300ForAllStrikeAndFinishGameAndRollSomeValue() {
 		// given
@@ -284,7 +278,8 @@ public class BoowlingGameResultCalculatorTest {
 
 		
 		int score = boowlingGameResultCalculator.score();
-		logger.info(Integer.toString(score));
 		
+		assertEquals(300, score);
 	}
+	
 }
