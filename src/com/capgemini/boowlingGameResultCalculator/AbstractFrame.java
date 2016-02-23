@@ -30,7 +30,6 @@ public abstract class AbstractFrame implements Frame {
         }
 
         if ((sumOfRolls() + numberOfPins > MAX_NUMBER_PINS_IN_ONE_ROLL) && !isSpare() && !isStrike()) {
-            // REVIEW bzychal - not tested
             throw new IllegalArgumentException(
                     "Number of pins in two rolls can not be bigger then " + MAX_NUMBER_PINS_IN_ONE_ROLL);
         }
