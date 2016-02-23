@@ -8,7 +8,6 @@ public class BoowlingGameResultCalculator implements BoowlingGameResultCalculato
     private final int MAX_NUMBER_OF_LAST_FRAMES = 1;
     private final int MAX_NUMBER_OF_FRAMES = MAX_NUMBER_OF_NORMAL_FRAMES + MAX_NUMBER_OF_LAST_FRAMES;
 
-    // REVIEW bzychal - the variables which don't change should be declared final
     private final LinkedList<Frame> listOfFrames;
     private final FrameFactory frameFactory;
     private Integer frameCounter;
@@ -25,42 +24,33 @@ public class BoowlingGameResultCalculator implements BoowlingGameResultCalculato
         listOfFrames.add(newFrame);
     }
 
-    // REVIEW bzychal -
     private Frame getNewFrame() {
-        ++frameCounter;
-        return frameFactory.getFrame(frameCounter);
+        frameCounter += 1;
+        return frameFactory.createFrame(frameCounter);
     }
 
     @Override
-    public void roll(int numberOfPins) {
+    public void roll(int numberOfPins) throws IllegalAccessException {
         if (!isFinished()) {
-            // REVIEW bzychal - this code is badly written, we have two calls to getCurrentFrame which return different
-            // results each time, better would be for the addNewFrame method to return the new frame which was created
-            // as side effect.
             Frame currentFrame = getCurrentFrame();
             if (currentFrame.isFinished()) {
-                addNewFrame();
-                currentFrame = getCurrentFrame();
+                currentFrame = addNewFrame();
             }
             currentFrame.addRoll(numberOfPins);
+        }else{
+            throw new IllegalAccessException("The game is finished");
         }
-        // REVIEW bzychal - what in case when the game is finished and smn rolls a ball? Should not an exception be
-        // thrown here?
     }
 
-    private void addNewFrame() {
+    private Frame addNewFrame() {
         Frame newFrame = getNewFrame();
         updateNextFrameForCurrentFrame(newFrame);
         listOfFrames.add(newFrame);
+        return newFrame;
     }
 
     private void updateNextFrameForCurrentFrame(Frame nextFrame) {
-        // REVIEW bzychal - the exception should not be caught here, it is ok for it to terminate the program
-        try {
             getCurrentFrame().setNextFrame(nextFrame);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
     }
 
     private Frame getCurrentFrame() {
@@ -69,12 +59,7 @@ public class BoowlingGameResultCalculator implements BoowlingGameResultCalculato
 
     @Override
     public int score() {
-        Integer score = new Integer(0);
-        // REVIEW bzychal - please use Streams and the reduce method from Java 8 for this calculation
-        for (Frame frame : listOfFrames) {
-            score += frame.score();
-        }
-        return score;
+       return listOfFrames.stream().map(Frame::score).reduce((score1,score2)->score1+score2).get();
     }
 
     @Override

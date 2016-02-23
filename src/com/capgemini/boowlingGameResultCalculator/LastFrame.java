@@ -12,27 +12,6 @@ public class LastFrame extends AbstractFrame {
     }
 
     @Override
-    public void addRoll(int numberOfPins) throws IllegalArgumentException {
-        if (numberOfPins < MIN_NUMBER_PINS_IN_ONE_ROLL) {
-            // REVIEW bzychal - not tested
-            throw new IllegalArgumentException("Number of pins can not be negative number");
-        }
-
-        if (numberOfPins > MAX_NUMBER_PINS_IN_ONE_ROLL) {
-            throw new IllegalArgumentException(
-                    "Number of pins can be bigger then " + MAX_NUMBER_PINS_IN_ONE_ROLL + " in one rolls");
-        }
-
-        if ((sumOfRolls() + numberOfPins > MAX_NUMBER_PINS_IN_ONE_ROLL) && !isSpare() && !isStrike()) {
-            // REVIEW bzychal - not tested
-            throw new IllegalArgumentException(
-                    "Number of pins in two rolls can not be bigger then " + MAX_NUMBER_PINS_IN_ONE_ROLL);
-        }
-
-        rolls.add(numberOfPins);
-    }
-
-    @Override
     public Integer score() {
         return sumOfRolls();
     }
@@ -44,9 +23,7 @@ public class LastFrame extends AbstractFrame {
 
     @Override
     public Boolean isFinished() {
-        // REVIEW bzychal - too many ( ) brackets, please use only those which are necessary
-        return (!isSpare() && !isStrike() && rolls.size() == MIN_NUMBER_OF_ROLLS) || (rolls
-                .size() == MAX_NUMBER_OF_ROLLS);
+        return !isSpare() && !isStrike() && rolls.size() == MIN_NUMBER_OF_ROLLS || rolls.size() == MAX_NUMBER_OF_ROLLS;
     }
 
     @Override
@@ -55,8 +32,12 @@ public class LastFrame extends AbstractFrame {
     }
 
     @Override
-    public void setNextFrame(Frame frame) throws IllegalAccessException {
-        throw new IllegalAccessException("Last frame can not have next frame");
+    public void setNextFrame(Frame frame){
+        try {
+			throw new IllegalAccessException("Last frame can not have next frame");
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
     }
 
 }

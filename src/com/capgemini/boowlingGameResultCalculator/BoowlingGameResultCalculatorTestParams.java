@@ -5,11 +5,9 @@ import static org.junit.Assert.assertEquals;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.logging.Logger;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -20,7 +18,7 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class BoowlingGameResultCalculatorTestParams {
 
-	BoowlingGameResultCalculator boowlingGameResultCalculator;
+	BoowlingGameResultCalculatorInterface boowlingGameResultCalculator;
 
 	enum WithException{
 		YES,NO
@@ -84,7 +82,7 @@ public class BoowlingGameResultCalculatorTestParams {
 
 
 	@Test
-	public void shouldBeExpectedForParametersWithoutException() {
+	public void shouldBeExpectedForParametersWithoutException() throws Exception {
 		//when
 		if(WithException.NO.equals(withException)){
 			 
@@ -114,7 +112,7 @@ public class BoowlingGameResultCalculatorTestParams {
 	public ExpectedException thrown = ExpectedException.none();
 
 	@Test
-	public void shouldBeThrowIllegalArgumentException() {
+	public void shouldBeThrowIllegalArgumentException() throws Exception {
 		 //when
 		if(WithException.YES.equals(withException)){
 			

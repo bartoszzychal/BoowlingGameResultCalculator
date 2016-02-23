@@ -1,6 +1,5 @@
 package com.capgemini.boowlingGameResultCalculator;
 
-// REVIEW bzychal - what is the point of having this interface? I don't see any use of it.
 public interface BoowlingGameResultCalculatorInterface {
     /**
      * Register a thrown a ball.

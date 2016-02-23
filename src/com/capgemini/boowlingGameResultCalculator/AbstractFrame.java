@@ -1,33 +1,42 @@
 package com.capgemini.boowlingGameResultCalculator;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public abstract class AbstractFrame implements Frame {
 
     protected final int MIN_NUMBER_PINS_IN_ONE_ROLL = 0;
     protected final int MAX_NUMBER_PINS_IN_ONE_ROLL = 10;
 
-    // REVIEW bzychal - please use List interface and not ArrayList
-    protected ArrayList<Integer> rolls;
+    protected List<Integer> rolls;
     protected Frame nextFrame;
 
-    // REVIEW bzychal - the empty overriden methods are not necessary here and should be removed.
-    @Override
-    public abstract void addRoll(int numberOfPins);
+    public abstract void setNextFrame(Frame frame);
 
-    @Override
-    public abstract void setNextFrame(Frame frame) throws IllegalAccessException;
-
-    @Override
     public abstract Integer score();
 
-    @Override
     public abstract Integer getBonusForPreviousFrame(Boolean isStrikeInPreviousFrame);
-
-    @Override
+    
     public abstract Boolean isFinished();
 
-    @Override
+    public void addRoll(int numberOfPins) throws IllegalArgumentException {
+
+        if (numberOfPins < MIN_NUMBER_PINS_IN_ONE_ROLL) {
+            throw new IllegalArgumentException("Number of pins can not be negative number");
+        }
+
+        if (numberOfPins > MAX_NUMBER_PINS_IN_ONE_ROLL) {
+            throw new IllegalArgumentException(
+                    "Number of pins can be bigger then " + MAX_NUMBER_PINS_IN_ONE_ROLL + " in one rolls");
+        }
+
+        if ((sumOfRolls() + numberOfPins > MAX_NUMBER_PINS_IN_ONE_ROLL) && !isSpare() && !isStrike()) {
+            // REVIEW bzychal - not tested
+            throw new IllegalArgumentException(
+                    "Number of pins in two rolls can not be bigger then " + MAX_NUMBER_PINS_IN_ONE_ROLL);
+        }
+        rolls.add(numberOfPins);
+    }
+    
     public Integer getFirstRoll() {
         return rolls.get(0);
     }

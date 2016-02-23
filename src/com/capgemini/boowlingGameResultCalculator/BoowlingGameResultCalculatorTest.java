@@ -1,18 +1,14 @@
 package com.capgemini.boowlingGameResultCalculator;
 
-import static org.junit.Assert.*;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class BoowlingGameResultCalculatorTest {
 
-	BoowlingGameResultCalculator boowlingGameResultCalculator;
+	BoowlingGameResultCalculatorInterface boowlingGameResultCalculator;
 
 	@Before
 	public void beforeTestCreateObject() {
@@ -25,7 +21,7 @@ public class BoowlingGameResultCalculatorTest {
 	}
 
 	@Test
-	public void shouldBeZeroForHitsZeroPins() {
+	public void shouldBeZeroForHitsZeroPins() throws Exception {
 		// given
 		int zeroPins = 0;
 		// when
@@ -44,7 +40,7 @@ public class BoowlingGameResultCalculatorTest {
 	}
 
 	@Test
-	public void shouldBeFourForHitsFourPins() {
+	public void shouldBeFourForHitsFourPins() throws Exception {
 		// given
 		int fourPins = 4;
 		// when
@@ -55,7 +51,7 @@ public class BoowlingGameResultCalculatorTest {
 	}
 
 	@Test
-	public void shouldBeTwoForHitsOnePinInFristHitAndOnePinInSecondHit() {
+	public void shouldBeTwoForHitsOnePinInFristHitAndOnePinInSecondHit() throws Exception {
 		// given
 		int onePinInFirstHit = 1;
 		int onePinInSecondHit = 1;
@@ -69,7 +65,7 @@ public class BoowlingGameResultCalculatorTest {
 	}
 
 	@Test
-	public void shouldBeTwentyEightForSpareAndHitNinePinsInFirstThrowNextRound() {
+	public void shouldBeTwentyEightForSpareAndHitNinePinsInFirstThrowNextRound() throws Exception {
 		// given
 		// spare
 		int firstNumberOfPinsInSpare = 9;
@@ -90,7 +86,7 @@ public class BoowlingGameResultCalculatorTest {
 	}
 
 	@Test
-	public void shouldBeTwentyEightForStrikeAndHitEightAndOneInNextFrame() {
+	public void shouldBeTwentyEightForStrikeAndHitEightAndOneInNextFrame() throws Exception {
 		// given
 		// strike
 		int strike = 10;
@@ -110,7 +106,7 @@ public class BoowlingGameResultCalculatorTest {
 	}
 
 	@Test
-	public void shouldBeTFourtyFiveForTenTenFive() {
+	public void shouldBeTFourtyFiveForTenTenFive() throws Exception {
 		// given
 		int firstRoll = 10;
 		int secondRoll = 10;
@@ -128,7 +124,7 @@ public class BoowlingGameResultCalculatorTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void shouldBeExceptionForNegativeNumber() {
+	public void shouldBeExceptionForNegativeNumber() throws Exception {
 		// given
 		int firstRoll = -1;
 
@@ -140,7 +136,7 @@ public class BoowlingGameResultCalculatorTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void shouldBeExceptionForEleven() {
+	public void shouldBeExceptionForEleven() throws Exception {
 		// given
 		int firstRoll = 11;
 
@@ -151,7 +147,7 @@ public class BoowlingGameResultCalculatorTest {
 	}
 
 	@Test
-	public void shouldBeNineTeenForOnlyZerosInNormalFramesAndFiveAndFourInLastFrame() {
+	public void shouldBeNineTeenForOnlyZerosInNormalFramesAndFiveAndFourInLastFrame() throws Exception {
 		// given
 		int zero = 0;
 		int five = 5;
@@ -173,7 +169,7 @@ public class BoowlingGameResultCalculatorTest {
 	}
 
 	@Test
-	public void shouldBeNineTeenForOnlyZerosInNormalFramesAndTenFiveFour() {
+	public void shouldBeNineTeenForOnlyZerosInNormalFramesAndTenFiveFour() throws Exception {
 		// given
 		int zero = 0;
 		int ten = 10;
@@ -197,7 +193,7 @@ public class BoowlingGameResultCalculatorTest {
 	}
 
 	@Test
-	public void shouldBeTwelveForOnlyZerosInNormalFramesAndNineOneTwo() {
+	public void shouldBeTwelveForOnlyZerosInNormalFramesAndNineOneTwo() throws Exception {
 		// given
 		int zero = 0;
 		int nine = 9;
@@ -221,7 +217,7 @@ public class BoowlingGameResultCalculatorTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void shouldBeExceptionOnlyZerosInNormalFramesAndTenTenEleven() {
+	public void shouldBeExceptionOnlyZerosInNormalFramesAndTenTenEleven() throws Exception {
 		// given
 		int ten = 10;
 		int eleven = 11;
@@ -244,7 +240,7 @@ public class BoowlingGameResultCalculatorTest {
 
 
 	@Test
-	public void shouldBe300ForAllStrike() {
+	public void shouldBe300ForAllStrike() throws Exception {
 		// given
 		int ten = 10;
 
@@ -261,8 +257,8 @@ public class BoowlingGameResultCalculatorTest {
 		assertEquals(300, score);
 	}
 	
-	@Test
-	public void shouldBe300ForAllStrikeAndFinishGameAndRollSomeValue() {
+	@Test(expected= IllegalAccessException.class)
+	public void shouldIllegalAccesExceptionForGameFinishedAndNextRoll() throws Exception {
 		// given
 		int ten = 10;
 		
@@ -276,10 +272,51 @@ public class BoowlingGameResultCalculatorTest {
 
 		boowlingGameResultCalculator.roll(ten);
 
+	}
+	@Test(expected= IllegalArgumentException.class)
+	public void shouldIllegalArgumentExceptionForNegativeNumber() throws Exception {
+		// given
+		int negativeNumber = -1;
+		boowlingGameResultCalculator.roll(negativeNumber);
 		
-		int score = boowlingGameResultCalculator.score();
+	}
+	@Test(expected= IllegalArgumentException.class)
+	public void shouldIllegalArgumentExceptionForNegativeNumberInLastFrame() throws Exception {
+		// given
+		int ten = 10;
+		int negativeNumber = -1;
+
+		// when
+		for (int frames = 0; frames < 10; frames++) {
+			boowlingGameResultCalculator.roll(ten);
+		}
 		
-		assertEquals(300, score);
+		boowlingGameResultCalculator.roll(negativeNumber);
+		
+	}
+	@Test(expected= IllegalArgumentException.class)
+	public void shouldIllegalArgumentException2And9InOneFrame() throws Exception {
+		// given
+		int two = 2;
+		int nine = 9;
+		
+		// when
+		boowlingGameResultCalculator.roll(two);
+		boowlingGameResultCalculator.roll(nine);
+	}
+	@Test(expected= IllegalArgumentException.class)
+	public void shouldIllegalArgumentException10And10and11InLastFrame() throws Exception {
+		// given
+		int ten = 10;
+		int elf = 11;
+		
+		// when
+		for (int frames = 0; frames < 10; frames++) {
+			boowlingGameResultCalculator.roll(ten);
+		}
+		
+		boowlingGameResultCalculator.roll(ten);
+		boowlingGameResultCalculator.roll(elf);
 	}
 	
 }

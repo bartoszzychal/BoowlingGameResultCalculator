@@ -10,30 +10,7 @@ public class NormalFrame extends AbstractFrame {
     public NormalFrame() {
         rolls = new ArrayList<>(MAX_NUMBER_OF_ROLLS);
     }
-
-    // REVIEW bzychal - duplicated method here and in the LastFrame, the implementation in the LastFrame has a bit
-    // different check for the third case, but it should be checked here as well. Please move
-    @Override
-    public void addRoll(int numberOfPins) throws IllegalArgumentException {
-
-        if (numberOfPins < MIN_NUMBER_PINS_IN_ONE_ROLL) {
-            throw new IllegalArgumentException("Number of pins can not be negative number");
-        }
-
-        if (numberOfPins > MAX_NUMBER_PINS_IN_ONE_ROLL) {
-            throw new IllegalArgumentException(
-                    "Number of pins can be bigger then " + MAX_NUMBER_PINS_IN_ONE_ROLL + " in one rolls");
-        }
-
-        if (sumOfRolls() + numberOfPins > MAX_NUMBER_PINS_IN_ONE_NORMAL_FRAME) {
-            // REVIEW bzychal - not tested
-            throw new IllegalArgumentException(
-                    "Number of pins in one frame can not be bigger then " + MAX_NUMBER_PINS_IN_ONE_NORMAL_FRAME);
-        }
-
-        rolls.add(numberOfPins);
-    }
-
+    
     @Override
     public Integer score() {
         return sumOfRolls() + getBonusValue();
